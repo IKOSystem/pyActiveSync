@@ -1,16 +1,16 @@
 ########################################################################
 #  Copyright (C) 2013 Sol Birnbaum
-# 
+#
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 2
 #  of the License, or (at your option) any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -18,7 +18,7 @@
 ########################################################################
 
 
-from wapxml import wapxmltree, wapxmlnode
+from .wapxml import wapxmltree, wapxmlnode
 
 class wbxml_parser(object):
     """WBXML Parser"""
@@ -29,11 +29,11 @@ class wbxml_parser(object):
     STRING_TABLE_LENGTH_BYTE =  0x00 #String tables are not used by MS-ASWBXML
 
     class GlobalTokens:
-        SWITCH_PAGE = 0x00  
+        SWITCH_PAGE = 0x00
         END         = 0x01
         ENTITY      = 0x02 #Not used by MS-ASWBXML
         STR_I       = 0x03
-        LITERAL     = 0x04 
+        LITERAL     = 0x04
         EXT_I_0     = 0x40 #Not used by MS-ASWBXML
         EXT_I_1     = 0x41 #Not used by MS-ASWBXML
         EXT_I_2     = 0x42 #Not used by MS-ASWBXML
@@ -121,7 +121,7 @@ class wbxml_parser(object):
             for child in current_node.get_children():
                 self.encode_node_recursive(child, wbxml_bytes)   #will have to use class var for current_code_page since stack is being replaced on recursive iter
         wbxml_bytes.append(self.GlobalTokens.END)
-    
+
     def decode(self, inwbxml=None):
         if inwbxml:
             self.wbxml = bytearray()
@@ -197,7 +197,7 @@ class wbxml_parser(object):
                 tag_token = temp_xmlns + current_code_page.get_tag(token)
                 if not first_iter:
                     new_element = wapxmlnode(tag_token, current_element)
-                    if (byte & 0x40): #check to see if new element has children 
+                    if (byte & 0x40): #check to see if new element has children
                         current_element = new_element
                 elif current_element.is_root():
                     current_element.tag = tag_token
@@ -279,7 +279,7 @@ class wbxml_parser(object):
     def decode_multibyte_integer(self):
         #print "indices: ", self.pointer, "of",  len(self.wbxml)
         if self.pointer >= len(self.wbxml):
-            raise IndexError("wbxml is truncated. nothing left to decode") 
+            raise IndexError("wbxml is truncated. nothing left to decode")
         integer = 0
         while ( self.wbxml[self.pointer] & 0x80 ) != 0:
             integer = integer << 7

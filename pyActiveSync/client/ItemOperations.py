@@ -1,25 +1,25 @@
 ########################################################################
 #  Copyright (C) 2013 Sol Birnbaum
-# 
+#
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 2
 #  of the License, or (at your option) any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA  02110-1301, USA.
 ########################################################################
 
-from utils.wapxml import wapxmltree, wapxmlnode
+from ..utils.wapxml import wapxmltree, wapxmlnode
 
-from objects.MSASAIRS import airsyncbase_Body, airsyncbase_BodyPart
+from ..objects.MSASAIRS import airsyncbase_Body, airsyncbase_BodyPart
 
 class ItemOperations:
     """http://msdn.microsoft.com/en-us/library/ee202415(v=exchg.80).aspx"""
@@ -74,7 +74,7 @@ class ItemOperations:
                 if operations[operation].has_key("BodyPartPreference"):
                     xmlbodypartpreferencenode = wapxmlnode("airsyncbase:BodyPartPreference", xmloptionsnode, operations[operation]["BodyPartPreference"])
                 if operations[operation].has_key("RightsManagementSupport"):
-                    xmlrmsupportnode = wapxmlnode("rm:RightsManagementSupport", xmloptionsnode, operations[operation]["RightsManagementSupport"])#1=Supports RM. Decrypt message before send. 2=Do not decrypt message before send 
+                    xmlrmsupportnode = wapxmlnode("rm:RightsManagementSupport", xmloptionsnode, operations[operation]["RightsManagementSupport"])#1=Supports RM. Decrypt message before send. 2=Do not decrypt message before send
                 if len(xmloptionsnode.get_children()) > 0:
                     xmloptionsnode.set_parent(xmlfetchnode)
 

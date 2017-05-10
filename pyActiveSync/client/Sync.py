@@ -1,30 +1,30 @@
 ########################################################################
 #  Copyright (C) 2013 Sol Birnbaum
-# 
+#
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 2
 #  of the License, or (at your option) any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA  02110-1301, USA.
 ########################################################################
 
-from utils.wapxml import wapxmltree, wapxmlnode
+from ..utils.wapxml import wapxmltree, wapxmlnode
 
-from objects.MSASCMD import FolderHierarchy
-from objects.MSASEMAIL import parse_email
-from objects.MSASCNTC import parse_contact
-from objects.MSASCAL import parse_calendar
-from objects.MSASTASK import parse_task
-from objects.MSASNOTE import parse_note
+from ..objects.MSASCMD import FolderHierarchy
+from ..objects.MSASEMAIL import parse_email
+from ..objects.MSASCNTC import parse_contact
+from ..objects.MSASCAL import parse_calendar
+from ..objects.MSASTASK import parse_task
+from ..objects.MSASNOTE import parse_note
 
 class Sync:
     """'Sync' command builders and parsers"""
@@ -51,7 +51,7 @@ class Sync:
                 xml_as_SyncKey_node = wapxmlnode("SyncKey", xml_as_Collection_node, synckeys[collection_id])    #http://msdn.microsoft.com/en-us/library/gg663426(v=exchg.80).aspx
             except KeyError:
                 xml_as_SyncKey_node = wapxmlnode("SyncKey", xml_as_Collection_node, "0")
-                
+
             xml_as_CollectionId_node = wapxmlnode("CollectionId", xml_as_Collection_node, collection_id) #http://msdn.microsoft.com/en-us/library/gg650886(v=exchg.80).aspx
 
             for parameter in collections[collection_id].keys():
@@ -143,7 +143,7 @@ class Sync:
         if airsyncbase_sync_children[0].tag != "Collections":
             raise AttributeError("%s response does not conform to any known %s responses." % (root_tag, root_tag))
 
-        response = []            
+        response = []
 
         airsyncbase_sync_collections_children = airsyncbase_sync_children[0].get_children()
         airsyncbase_sync_collections_children_count = len(airsyncbase_sync_collections_children)

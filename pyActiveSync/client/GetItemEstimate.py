@@ -1,23 +1,23 @@
 ########################################################################
 #  Copyright (C) 2013 Sol Birnbaum
-# 
+#
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 2
 #  of the License, or (at your option) any later version.
-# 
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-# 
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA  02110-1301, USA.
 ########################################################################
 
-from utils.wapxml import wapxmltree, wapxmlnode
+from ..utils.wapxml import wapxmltree, wapxmlnode
 
 class GetItemEstimate:
     class getitemestimate_response:
@@ -39,7 +39,7 @@ class GetItemEstimate:
             try:
                 xml_gie_airsyncSyncKey_node = wapxmlnode("airsync:SyncKey", xml_Collection_node, synckeys[collection_id])
             except KeyError:
-                xml_gie_airsyncSyncKey_node = wapxmlnode("airsync:SyncKey", xml_Collection_node, "0") 
+                xml_gie_airsyncSyncKey_node = wapxmlnode("airsync:SyncKey", xml_Collection_node, "0")
             xml_gie_CollectionId_node = wapxmlnode("CollectionId", xml_Collection_node, collection_id)#?
             if options[collection_id].has_key("ConversationMode"):
                 xml_gie_ConverationMode_node = wapxmlnode("airsync:ConversationMode", xml_Collection_node, options[collection_id]["ConversationMode"])#?
@@ -50,7 +50,7 @@ class GetItemEstimate:
             if options[collection_id].has_key("MaxItems"):
                 xml_gie_airsyncMaxItems_node = wapxmlnode("airsync:MaxItems", xml_gie_airsyncMaxItems_node, options[collection_id]["MaxItems"]) #OPTIONAL  #INT   #http://msdn.microsoft.com/en-us/library/gg675531(v=exchg.80).aspx
         return getitemestimate_xmldoc_req
-        
+
     @staticmethod
     def parse(wapxml):
 
@@ -87,7 +87,3 @@ class GetItemEstimate:
                             response.Estimate = collection_child.text
             responses.append(response)
         return responses
-
-
-
-
